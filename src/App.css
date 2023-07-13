@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap');
+
+* {
+	font-family: 'Work Sans', sans-serif;
+}
+
+.app {
+	min-height: 100vh;
+	display: flex;
+	box-sizing: border-box;
+}
+
+::webkit-scrollbar {
+	width: 0px;
+	opacity: 0.3 !important;
+}
+::weblit-scrollbar-thumb {
+	background: rgba(136, 135, 136, 0.281);
+	opacity: 0.3 !important;
+}
+::webkit-scrollbar-thumb:hover {
+	background: #a79b9b;
+}
+.chatpage {
+	background-image: url('../assets/wallpaper.png');
+	min-height: 100%;
+}
