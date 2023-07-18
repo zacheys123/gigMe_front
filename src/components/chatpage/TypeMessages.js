@@ -1,3 +1,4 @@
+//httpswww.youtube.com/watch?v=PqzlBRRCiaM
 import {
 	Box,
 	Input,
@@ -11,7 +12,7 @@ import { useAuthContext } from '../../context/_context/AuthContext';
 import { useState } from 'react';
 import { NEWMESSAGE } from '../../context/types/users';
 import animationData from '../../animations/typing.json';
-import Lottie from 'react-lottie';
+
 const TypeMessages = ({ isTyping, sendMessage, typingHandler }) => {
 	const {
 		userState: { selectedchat, messages, loading, new_message },
@@ -28,12 +29,12 @@ const TypeMessages = ({ isTyping, sendMessage, typingHandler }) => {
 	return (
 		<Box mt={5} w="100%">
 			<FormControl isRequired onKeyDown={sendMessage}>
-				{isTyping ? (
-					<Lottie
-						w="10px"
-						style={{ marginLeft: '15px', marginRight: '15px' }}
-						options={defaultoptions}
-					/>
+				{!isTyping ? (
+					<div className="typing">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
 				) : (
 					''
 				)}

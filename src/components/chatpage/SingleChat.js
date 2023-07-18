@@ -24,7 +24,12 @@ import axios from 'axios';
 import './style.css';
 import ScrollableChat from './ScrollableChat';
 import { io } from 'socket.io-client';
-const Endpoint = 'http://localhost:3500';
+import {
+	getMessageSlice,
+	getMessagesSlice,
+	sendMessageSlice,
+} from '../../context/features/users';
+const Endpoint = 'https://gigme-backend.onrender.com';
 let socket, selectedChatCompare;
 const SingleChat = () => {
 	const [socketConnected, setSocket] = useState(false);
@@ -46,67 +51,26 @@ const SingleChat = () => {
 	const [isTyping, setIsTyping] = useState(false);
 	const toast = useToast();
 	const sendMessage = async (ev) => {
-		if (ev.key === 'Enter' && new_message) {
-			socket.emit('stop typing', selectedchat._id);
-			try {
-				const config = {
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Bearer ${user.token}`,
-					},
-				};
-				userDispatch({
-					type: NEWMESSAGE,
-					payload: '',
-				});
-				const { data } = await axios.post(
-					'http://localhost:3500/api/message',
-					{ content: new_message, chatId: selectedchat?._id },
-					config,
-				);
-
-				console.log(data);
-				socket.emit('new message', data);
-				userDispatch({
-					type: MESSAGES,
-					payload: [...messages, data],
-				});
-			} catch (error) {
-				toast({
-					title: error?.response?.data?.message,
-					description: 'Failed to Update Messages',
-					duration: 3000,
-					isClosable: true,
-					position: 'top',
-				});
-			}
-		}
+		sendMessageSlice(
+			user,
+			socket,
+			userDispatch,
+			new_message,
+			selectedchat,
+			ev,
+			messages,
+			toast,
+		);
 	};
 
 	const getAllMessages = async () => {
-		if (!selectedchat) return;
-
-		try {
-			const config = {
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${user.token}`,
-				},
-			};
-			const id = selectedchat?._id;
-			userDispatch({ type: LOADING });
-			const { data } = await axios.get(
-				`http://localhost:3500/api/message/${id}`,
-				config,
-			);
-
-			console.log(messages);
-			userDispatch({ type: MESSAGES, payload: data });
-			userDispatch({ type: LOADING });
-			socket.emit('join chat', selectedchat?._id);
-		} catch (error) {
-			console.log(error.message);
-		}
+		getMessageSlice(
+			user,
+			selectedchat,
+			userDispatch,
+			messages,
+			socket,
+		);
 	};
 
 	var connectionOptions = {

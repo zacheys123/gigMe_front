@@ -16,8 +16,7 @@ import { useAuthContext } from '../../context/_context/AuthContext';
 import { useMainContext } from '../../context/_context/UserContext';
 import ProfileModal from './ProfileModal';
 import DrawerRight from './Drawer';
-import NotificationBadge from 'react-notification-badge';
-import { Effect } from 'react-notification-badge';
+
 import {
 	CREATECHAT,
 	SETNOTIFICATIONS,
