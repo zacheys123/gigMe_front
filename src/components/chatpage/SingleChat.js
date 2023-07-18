@@ -186,88 +186,86 @@ const SingleChat = () => {
 	return (
 		<>
 			{selectedchat ? (
-				<Box w="100%" h="86%" d="flex" justifyContent="column">
-					<Box flex=".6" h="100%">
-						<Box
-							fontSize={{ base: '28px', md: '18px' }}
-							pb={3}
-							px={2}
-							w="100%"
-							fontFamily="cursive"
-							style={{
-								display: 'flex',
-								justifyContent: 'space-between',
-								alignItems: 'center',
-							}}
-						>
-							<IconButton
-								d={{ base: 'none', md: 'none' }}
-								icon={<ArrowBackIcon />}
-								onClick={() =>
-									userDispatch({ type: CREATECHAT, payload: '' })
-								}
-							/>
-
-							{!selectedchat.isGroupChat ? (
-								<>
-									{selectedchat?.users[0]._id === user?.result?._id
-										? selectedchat?.users[1].name
-										: selectedchat?.users[0].name}
-									<ProfileModal
-										user={getSenderFull(user, selectedchat?.users)}
-									/>
-								</>
-							) : (
-								<>
-									{selectedchat.chatName.toUpperCase()}
-
-									<UpdateGroup fetchMessages={getAllMessages} />
-								</>
-							)}
-						</Box>
-
-						<Box
-							style={{
-								display: 'flex',
-								overflowY: 'hidden',
-								flexDirection: 'column',
-								justifyContent: 'flex-end',
-								borderRadius: '20px',
-								width: '100%',
-								height: '100%',
-							}}
-							h="100%"
-							className="chatpage"
-						>
-							{loading ? (
-								<Spinner
-									color="white"
-									size="xl"
-									w={20}
-									h={20}
-									alignSelf="center"
-									margin="auto"
-								/>
-							) : (
-								<div className="messages">
-									{
-										<ScrollableChat
-											messages={messages}
-											selectedchat={selectedchat}
-										/>
-									}
-								</div>
-							)}
-						</Box>
-					</Box>
-					<Box>
-						<TypeMessages
-							isTyping={isTyping}
-							sendMessage={sendMessage}
-							typingHandler={typingHandler}
+				<>
+					<Text
+						w="100%"
+						fontSize={{ base: '28px', md: '18px' }}
+						pb={3}
+						px={2}
+						fontFamily="cursive"
+						style={{
+							display: 'flex',
+							justifyContent: 'space-between',
+							alignItems: 'center',
+						}}
+					>
+						<IconButton
+							d={{ base: 'flex', md: 'none' }}
+							icon={<ArrowBackIcon />}
+							onClick={() =>
+								userDispatch({ type: CREATECHAT, payload: '' })
+							}
 						/>
+
+						{!selectedchat.isGroupChat ? (
+							<>
+								{selectedchat?.users[0]._id === user?.result?._id
+									? selectedchat?.users[1].name
+									: selectedchat?.users[0].name}
+								<ProfileModal
+									user={getSenderFull(user, selectedchat?.users)}
+								/>
+							</>
+						) : (
+							<>
+								{selectedchat.chatName.toUpperCase()}
+
+								<UpdateGroup fetchMessages={getAllMessages} />
+							</>
+						)}
+					</Text>
+
+					<Box
+						w="100%"
+						h="85%"
+						d="flex"
+						justifyContent="column"
+						style={{
+							display: 'flex',
+							overflowY: 'hidden',
+							flexDirection: 'column',
+							justifyContent: 'flex-end',
+
+							width: '100%',
+						}}
+						className="chatpage"
+					>
+						{loading ? (
+							<Spinner
+								color="white"
+								size="xl"
+								w={20}
+								h={20}
+								alignSelf="center"
+								margin="auto"
+							/>
+						) : (
+							<div className="messages">
+								{
+									<ScrollableChat
+										messages={messages}
+										selectedchat={selectedchat}
+									/>
+								}
+							</div>
+						)}
 					</Box>
-				</Box>
+					<TypeMessages
+						isTyping={isTyping}
+						sendMessage={sendMessage}
+						typingHandler={typingHandler}
+					/>
+				</>
 			) : (
 				<>
 					<Box

@@ -10,8 +10,7 @@ const Chats = () => {
 	return (
 		<Box
 			sx={{
-				// display: selectedchat ? 'flex' : 'none',
-				// md: 'flex',
+				display: { base: selectedchat ? 'none' : 'flex', md: 'flex' },
 				width: { base: '100%', md: '68%' },
 			}}
 			h="100%"

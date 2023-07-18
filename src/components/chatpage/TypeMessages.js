@@ -26,8 +26,8 @@ const TypeMessages = ({ isTyping, sendMessage, typingHandler }) => {
 		},
 	};
 	return (
-		<Box mt="3.6rem">
-			<FormControl isRequired mt={3} onKeyDown={sendMessage}>
+		<Box mt={5} w="100%">
+			<FormControl isRequired onKeyDown={sendMessage}>
 				{isTyping ? (
 					<Lottie
 						w="10px"
@@ -42,7 +42,7 @@ const TypeMessages = ({ isTyping, sendMessage, typingHandler }) => {
 					style={{ outline: 'none !important' }}
 					borderRadius={'99px'}
 					variant="filled"
-					bg="#E0E0E0"
+					bg="#F1E9B0"
 					value={new_message}
 					onChange={typingHandler}
 				/>
