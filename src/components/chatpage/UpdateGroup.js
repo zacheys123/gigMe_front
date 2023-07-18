@@ -34,6 +34,7 @@ import {
 import { useAuthContext } from '../../context/_context/AuthContext';
 import { FETCHAGAIN, UPDATE } from '../../context/types/users';
 const UpdateGroup = ({ fetchMessages, children }) => {
+	const baseUrl = 'https://gigme-backend.onrender.com';
 	const {
 		userState: { selectedchat, chats },
 		userDispatch,
@@ -73,7 +74,7 @@ const UpdateGroup = ({ fetchMessages, children }) => {
 			const {
 				data: { result },
 			} = await axios.get(
-				`http://localhost:3500/api/users?search=${searchQuery}`,
+				`${baseUrl}/api/users?search=${searchQuery}`,
 				config,
 			);
 			setLoading(false);

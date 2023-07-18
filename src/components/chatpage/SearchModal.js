@@ -18,6 +18,7 @@ import { useMainContext } from '../../context/_context/UserContext';
 import { UPDATECHATS, APPEND } from '../../context/types/users';
 import { useNavigate } from 'react-router-dom';
 const SearchModal = ({ user, chats, setNewGroup }) => {
+	const baseUrl = 'https://gigme-backend.onrender.com';
 	const [groupName, setGroupName] = useState('');
 	const [selectedUsers, setSelectedUsers] = useState([]);
 	const [searchQuery, setSearchQuery] = useState('');
@@ -44,7 +45,7 @@ const SearchModal = ({ user, chats, setNewGroup }) => {
 			const {
 				data: { result },
 			} = await axios.get(
-				`http://localhost:3500/api/users?search=${searchQuery}`,
+				`${baseUrl}/api/users?search=${searchQuery}`,
 				config,
 			);
 			setLoading(false);
@@ -72,7 +73,7 @@ const SearchModal = ({ user, chats, setNewGroup }) => {
 			};
 
 			const { data } = await axios.post(
-				'http://localhost:3500/api/group',
+				`${baseUrl}/api/group`,
 				{
 					users: JSON.stringify(selectedUsers.map((u) => u._id)),
 					name: groupName,

@@ -5,7 +5,7 @@ import {
 	REGISTER,
 	REGISTER_ERROR,
 } from '../types/auth';
-const baseUrl = 'http://localhost:3500';
+const baseUrl = 'https://gigme-backend.onrender.com';
 export const getUsers = async (searchvalue, dispatch, setLoading) => {
 	setLoading(true);
 	try {

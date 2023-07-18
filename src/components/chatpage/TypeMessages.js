@@ -29,7 +29,7 @@ const TypeMessages = ({ isTyping, sendMessage, typingHandler }) => {
 	return (
 		<Box mt={5} w="100%">
 			<FormControl isRequired onKeyDown={sendMessage}>
-				{!isTyping ? (
+				{isTyping ? (
 					<div className="typing">
 						<span></span>
 						<span></span>

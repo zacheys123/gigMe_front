@@ -15,7 +15,8 @@ import axios from 'axios';
 import './style.css';
 import ScrollableChat from './ScrollableChat';
 import { io } from 'socket.io-client';
-const Endpoint = 'http://localhost:3500';
+const Endpoint = 'https://gigme-backend.onrender.com';
+const baseUrl = 'https://gigme-backend.onrender.com';
 let socket, selectedChatCompare;
 const Messages = (props) => {
 	const [socketConnected, setSocket] = useState(false);
@@ -42,7 +43,7 @@ const Messages = (props) => {
 					payload: '',
 				});
 				const { data } = await axios.post(
-					'http://localhost:3500/api/message',
+					`${baseUrl}/api/message`,
 					{ content: new_message, chatId: selectedchat?._id },
 					config,
 				);
@@ -78,7 +79,7 @@ const Messages = (props) => {
 			const id = selectedchat?._id;
 			userDispatch({ type: LOADING });
 			const { data } = await axios.get(
-				`http://localhost:3500/api/message/${id}`,
+				`${baseUrl}/api/message/${id}`,
 				config,
 			);
 
