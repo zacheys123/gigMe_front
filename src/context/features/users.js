@@ -60,7 +60,7 @@ export const accessChatSlice = async (
 
 	try {
 		const { data } = await axios.post(
-			'${baseUrl}/api/chats',
+			`${baseUrl}/api/chats`,
 			{ userId: id },
 			config,
 		);
@@ -83,7 +83,7 @@ export const fetchSlice = async (dispatch, user, setLoading) => {
 			headers: { Authorization: `Bearer ${token}` },
 		};
 
-		const { data } = await axios.get('/api', config);
+		const { data } = await axios.get(`${baseUrl}/api`, config);
 		setLoading(false);
 		dispatch({ type: FETCHUSERSCHATS, payload: data });
 	} catch (error) {
@@ -185,7 +185,7 @@ export const addUserSlice = async (
 		};
 
 		const { data } = await axios.put(
-			'${baseUrl}/api/groupadd',
+			`${baseUrl}/api/groupadd`,
 			{
 				chatId: selectedGroupchat?._id,
 				userId: selectedUser?._id,
@@ -264,7 +264,7 @@ export const removeSlice = async (
 		};
 
 		const { data } = await axios.put(
-			'${baseUrl}/api/groupremove',
+			`${baseUrl}/api/groupremove`,
 			{
 				chatId: selectedGroupchat?._id,
 				userId: selectedUser?._id,
@@ -334,7 +334,7 @@ export const sendMessageSlice = async (
 				payload: '',
 			});
 			const { data } = await axios.post(
-				'${baseUrl}/api/message',
+				`${baseUrl}/api/message`,
 				{ content: new_message, chatId: selectedchat?._id },
 				config,
 			);

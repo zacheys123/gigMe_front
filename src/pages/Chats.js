@@ -14,7 +14,7 @@ const Chats = () => {
 	const [loading, setLoading] = useState(false);
 
 	return (
-		<Box w="100%" bg={'lightgrey'}>
+		<Box w="100%" bg={'lightgrey'} h="100">
 			{user && (
 				<SideDrawer loading={loading} setLoading={setLoading} />
 			)}

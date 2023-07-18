@@ -131,7 +131,7 @@ const SearchModal = ({ user, chats, setNewGroup }) => {
 		return selectedUsers.splice(u, 1);
 	};
 	return (
-		<Box w="100%" h="100%">
+		<Box w="100%" h="100%" mt={10}>
 			{' '}
 			<Box>
 				<Box
@@ -246,29 +246,37 @@ const SearchModal = ({ user, chats, setNewGroup }) => {
 				</Button>
 			</Box>
 			<Divider orientation="horizontal" m={2} />
-			<Box>
-				<Text
-					d="flex"
-					color="green"
-					fontSize={{ base: '14px', md: '13px', lg: '17px' }}
-					m="2"
-					fontWeight="bold"
-				>
-					All available users:
-				</Text>
-				{loading ? (
-					<div>loading...</div>
-				) : (
-					searchResult?.map((user) => {
-						return (
-							<UserList
-								key={user?._id}
-								user={user}
-								handleFunction={() => handleGroup(user)}
-							/>
-						);
-					})
-				)}
+			<Box
+				style={{
+					position: 'relative',
+					h: '100%',
+					overflowY: 'hidden',
+				}}
+			>
+				<Box>
+					<Text
+						d="flex"
+						color="green"
+						fontSize={{ base: '14px', md: '13px', lg: '17px' }}
+						m="2"
+						fontWeight="bold"
+					>
+						All available users:
+					</Text>
+					{loading ? (
+						<div>loading...</div>
+					) : (
+						searchResult?.map((user) => {
+							return (
+								<UserList
+									key={user?._id}
+									user={user}
+									handleFunction={() => handleGroup(user)}
+								/>
+							);
+						})
+					)}
+				</Box>
 			</Box>
 		</Box>
 	);
