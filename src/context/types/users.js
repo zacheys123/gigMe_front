@@ -12,3 +12,4 @@ export const FETCHMESSAGES = 'FETCHMESSAGES';
 export const NEWMESSAGE = 'NEWMESSAGE';
 export const MESSAGES = 'MESSAGES';
 export const LOADING = 'LOADING';
+export const SETNOTIFICATIONS = 'SETNOTIFICATIONS';

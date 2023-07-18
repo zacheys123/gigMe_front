@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Box, Text, IconButton, Spinner } from '@chakra-ui/react';
 import { ArrowBackIcon, ViewIcon } from '@chakra-ui/icons';
-import { CREATECHAT } from '../../context/types/users';
+import { CREATECHAT, FETCHAGAIN } from '../../context/types/users';
 import { useMainContext } from '../../context/_context/UserContext';
 import { useAuthContext } from '../../context/_context/AuthContext';
 import NewChat from './userAvatar/NewChat';
@@ -17,6 +17,7 @@ import {
 	LOADING,
 	MESSAGES,
 	NEWMESSAGE,
+	SETNOTIFICATIONS,
 } from '../../context/types/users';
 
 import axios from 'axios';
@@ -28,7 +29,13 @@ let socket, selectedChatCompare;
 const SingleChat = () => {
 	const [socketConnected, setSocket] = useState(false);
 	const {
-		userState: { selectedchat, messages, loading, new_message },
+		userState: {
+			selectedchat,
+			messages,
+			loading,
+			new_message,
+			notifications,
+		},
 		userDispatch,
 	} = useMainContext();
 	const {
@@ -136,11 +143,17 @@ const SingleChat = () => {
 				!selectedChatCompare ||
 				selectedChatCompare._id !== newmessage?.chat?._id
 			) {
-				// give note
+				if (!notifications.includes(newmessage)) {
+					userDispatch({
+						type: SETNOTIFICATIONS,
+						payload: [newmessage, ...notifications],
+					});
+					userDispatch({ type: FETCHAGAIN });
+				}
 			} else {
 				userDispatch({
 					type: MESSAGES,
-					payload: [...messages, newmessage],
+					payload: [newmessage, ...notifications],
 				});
 			}
 		});

@@ -11,6 +11,7 @@ import {
 	NEWMESSAGE,
 	MESSAGES,
 	LOADING,
+	SETNOTIFICATIONS,
 } from '../types/users';
 
 export const userstate = {
@@ -21,6 +22,7 @@ export const userstate = {
 	messages: [],
 	loading: false,
 	new_message: '',
+	notifications: [],
 };
 export const userReducer = (state = userstate, action) => {
 	const newdata = [...state.chats, action.payload];
@@ -89,7 +91,13 @@ export const userReducer = (state = userstate, action) => {
 				...state,
 				loading: !state.loading,
 			};
+		case SETNOTIFICATIONS:
+			return {
+				...state,
+				notifications: action.payload,
+			};
 	}
+
 	return {
 		...state,
 	};

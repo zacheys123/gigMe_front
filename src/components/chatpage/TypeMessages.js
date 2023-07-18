@@ -30,12 +30,12 @@ const TypeMessages = ({ isTyping, sendMessage, typingHandler }) => {
 			<FormControl isRequired mt={3} onKeyDown={sendMessage}>
 				{isTyping ? (
 					<Lottie
-						w="70%"
-						style={{ marginLeft: 15, marginRight: 15 }}
+						w="10px"
+						style={{ marginLeft: '15px', marginRight: '15px' }}
 						options={defaultoptions}
 					/>
 				) : (
-					<></>
+					''
 				)}
 				<Input
 					placeholder="Enter a message..."

@@ -11,17 +11,28 @@ import {
 	MenuDivider,
 } from '@chakra-ui/react';
 import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useAuthContext } from '../../context/_context/AuthContext';
+import { useMainContext } from '../../context/_context/UserContext';
 import ProfileModal from './ProfileModal';
 import DrawerRight from './Drawer';
-
+import NotificationBadge from 'react-notification-badge';
+import { Effect } from 'react-notification-badge';
+import {
+	CREATECHAT,
+	SETNOTIFICATIONS,
+} from '../../context/types/users';
+import Badge from '@mui/material/Badge';
 const SideDrawer = ({ loading, setLoading }) => {
 	const {
 		authState: { user, users },
 		authDispatch,
 	} = useAuthContext();
-
+	const {
+		userState: { notifications },
+		userDispatch,
+	} = useMainContext();
+	const notref = useRef();
 	const [loadingChhat, setLoadingChat] = useState();
 
 	const logout = () => {
@@ -31,6 +42,7 @@ const SideDrawer = ({ loading, setLoading }) => {
 			localStorage.removeItem('profile');
 		}, 2000);
 	};
+
 	useEffect(() => {
 		console.log(users);
 	}, [users]);
@@ -63,9 +75,41 @@ const SideDrawer = ({ loading, setLoading }) => {
 				<Box></Box>
 				<Menu>
 					<MenuButton p={1}>
-						<BellIcon />
+						<Badge badgeContent={notifications.length} color="error">
+							<BellIcon />
+						</Badge>
 					</MenuButton>
-					{/*<MenuList><MenuList/>*/}
+					<MenuList pl={2}>
+						{!notifications.length && 'no new messages'}
+						{notifications.map((notification) => {
+							return (
+								<MenuItem
+									key={notification._id}
+									onClick={() => {
+										userDispatch({
+											type: CREATECHAT,
+											payload: notification?.chat,
+										});
+										userDispatch({
+											type: SETNOTIFICATIONS,
+											payload: notifications.filter(
+												(n) => n !== notification,
+											),
+										});
+									}}
+								>
+									{notification.chat.isGroupChat
+										? `New Message in ${notification.chat.chatName}`
+										: `Message from ${
+												notification.sender[0]?._id ===
+												user.result?._id
+													? notification.sender[1]?.name
+													: notification.sender[0]?.name
+										  }`}
+								</MenuItem>
+							);
+						})}
+					</MenuList>
 				</Menu>
 				<Menu>
 					<MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
