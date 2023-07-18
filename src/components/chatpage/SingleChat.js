@@ -18,6 +18,7 @@ import {
 	MESSAGES,
 	NEWMESSAGE,
 } from '../../context/types/users';
+
 import axios from 'axios';
 import './style.css';
 import ScrollableChat from './ScrollableChat';
@@ -38,8 +39,8 @@ const SingleChat = () => {
 	const [isTyping, setIsTyping] = useState(false);
 	const toast = useToast();
 	const sendMessage = async (ev) => {
-		socket.emit('stop typing', selectedchat._id);
 		if (ev.key === 'Enter' && new_message) {
+			socket.emit('stop typing', selectedchat._id);
 			try {
 				const config = {
 					headers: {
@@ -159,7 +160,7 @@ const SingleChat = () => {
 		}
 
 		let lastTypingTime = new Date().getTime();
-		let timer = 3000;
+		let timer = 1500;
 		setTimeout(() => {
 			let timenow = new Date().getTime();
 			let timeDiff = timenow - lastTypingTime;
@@ -236,7 +237,12 @@ const SingleChat = () => {
 								/>
 							) : (
 								<div className="messages">
-									{<ScrollableChat messages={messages} />}
+									{
+										<ScrollableChat
+											messages={messages}
+											selectedchat={selectedchat}
+										/>
+									}
 								</div>
 							)}
 						</Box>

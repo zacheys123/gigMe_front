@@ -16,7 +16,7 @@ export const getUsers = async (searchvalue, dispatch, setLoading) => {
 		dispatch({ type: 'GETUSERS', payload: userdata });
 	} catch (error) {
 		setLoading(true);
-		console.log(error);
+		console.log(error.message);
 	}
 };
 
@@ -68,6 +68,7 @@ export const loginSlice = async (
 			type: LOGIN_ERROR,
 			payload: error?.response.data.message,
 		});
+		console.log(error);
 	}
 };
 export const registerSlice = async (

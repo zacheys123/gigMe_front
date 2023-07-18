@@ -10,19 +10,35 @@ import { useMainContext } from '../../context/_context/UserContext';
 import { useAuthContext } from '../../context/_context/AuthContext';
 import { useState } from 'react';
 import { NEWMESSAGE } from '../../context/types/users';
-
+import animationData from '../../animations/typing.json';
+import Lottie from 'react-lottie';
 const TypeMessages = ({ isTyping, sendMessage, typingHandler }) => {
 	const {
 		userState: { selectedchat, messages, loading, new_message },
 		userDispatch,
 	} = useMainContext();
-
+	const defaultoptions = {
+		loop: true,
+		autoplay: true,
+		animationData: animationData,
+		rendererSettings: {
+			preserveAspectRatio: 'xMidYMid slice',
+		},
+	};
 	return (
 		<Box mt="3.6rem">
 			<FormControl isRequired mt={3} onKeyDown={sendMessage}>
-				{isTyping ? <div>loading</div> : ''}
+				{isTyping ? (
+					<Lottie
+						w="70%"
+						style={{ marginLeft: 15, marginRight: 15 }}
+						options={defaultoptions}
+					/>
+				) : (
+					<></>
+				)}
 				<Input
-					placeholder="Write Something..."
+					placeholder="Enter a message..."
 					style={{ outline: 'none !important' }}
 					borderRadius={'99px'}
 					variant="filled"
