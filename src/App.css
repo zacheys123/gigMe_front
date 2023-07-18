@@ -25,6 +25,7 @@
 	background-image: url('../assets/wallpaper.png');
 	background-position: center;
 	background-size: cover;
+	height: 100%;
 }
 .typing {
 	background: #e6e7ed;

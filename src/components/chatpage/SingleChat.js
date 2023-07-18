@@ -150,7 +150,12 @@ const SingleChat = () => {
 	return (
 		<>
 			{selectedchat ? (
-				<>
+				<Box
+					sx={{
+						width: '100%',
+						h: '100%',
+					}}
+				>
 					<Text
 						w="100%"
 						fontSize={{ base: '28px', md: '18px' }}
@@ -196,7 +201,7 @@ const SingleChat = () => {
 						justifyContent="column"
 						style={{
 							display: 'flex',
-							overflowY: 'hidden',
+
 							flexDirection: 'column',
 							justifyContent: 'flex-end',
 
@@ -229,7 +234,7 @@ const SingleChat = () => {
 						sendMessage={sendMessage}
 						typingHandler={typingHandler}
 					/>
-				</>
+				</Box>
 			) : (
 				<>
 					<Box

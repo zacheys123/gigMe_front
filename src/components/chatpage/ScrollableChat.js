@@ -59,7 +59,7 @@ const ScrollableChat = ({ messages, selectedchat }) => {
 						<div
 							style={{
 								display: 'flex',
-								margin: '1rem 1rem 2.5rem 1rem',
+								margin: '1',
 								maxWidth: '100%',
 							}}
 							key={m._id}
