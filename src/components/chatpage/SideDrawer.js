@@ -21,6 +21,7 @@ import {
 	CREATECHAT,
 	SETNOTIFICATIONS,
 } from '../../context/types/users';
+import { useMediaQuery } from '@chakra-ui/react';
 import Badge from '@mui/material/Badge';
 const SideDrawer = ({ loading, setLoading }) => {
 	const {
@@ -28,7 +29,7 @@ const SideDrawer = ({ loading, setLoading }) => {
 		authDispatch,
 	} = useAuthContext();
 	const {
-		userState: { notifications },
+		userState: { notifications, selectedchat },
 		userDispatch,
 	} = useMainContext();
 	const notref = useRef();
@@ -45,10 +46,11 @@ const SideDrawer = ({ loading, setLoading }) => {
 	useEffect(() => {
 		console.log(users);
 	}, [users]);
+	const [isSmallScreen] = useMediaQuery('(max-width: 820px)');
+
 	return (
 		<>
 			<Box
-				d="flex"
 				justifyContent="space-between"
 				alignItems="center"
 				bg="white"
@@ -65,13 +67,16 @@ const SideDrawer = ({ loading, setLoading }) => {
 					>
 						<Button variant="ghost">
 							<i className="fa fa-search"></i>
-							<Text d={{ base: 'none', md: 'flex' }} px="4">
+							<Text
+								px="4"
+								style={{ display: isSmallScreen ? 'none' : 'flex' }}
+							>
 								Search User
 							</Text>
 						</Button>
 					</Tooltip>
 				</DrawerRight>
-				<Box></Box>
+				<Box>GigMe</Box>
 				<Menu>
 					<MenuButton p={1}>
 						<Badge badgeContent={notifications.length} color="error">
@@ -116,6 +121,7 @@ const SideDrawer = ({ loading, setLoading }) => {
 							size="sm"
 							cursor="pointer"
 							name={user?.result?.name}
+							src={user?.pic}
 						/>
 					</MenuButton>
 					<MenuList>

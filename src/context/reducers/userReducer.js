@@ -12,6 +12,7 @@ import {
 	MESSAGES,
 	LOADING,
 	SETNOTIFICATIONS,
+	FETCHMESSAGESAGAIN,
 } from '../types/users';
 
 export const userstate = {
@@ -23,6 +24,7 @@ export const userstate = {
 	loading: false,
 	new_message: '',
 	notifications: [],
+	fetchMessages: false,
 };
 export const userReducer = (state = userstate, action) => {
 	const newdata = [...state.chats, action.payload];
@@ -80,6 +82,11 @@ export const userReducer = (state = userstate, action) => {
 				...state,
 				chats: alldata,
 				selectedchat: action.payload.selected,
+			};
+		case FETCHMESSAGESAGAIN:
+			return {
+				...state,
+				fetchMessages: true,
 			};
 		case MESSAGES:
 			return {

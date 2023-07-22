@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { Box, Text, IconButton, Spinner } from '@chakra-ui/react';
+import {
+	Box,
+	Text,
+	IconButton,
+	Spinner,
+	Hide,
+} from '@chakra-ui/react';
 import { ArrowBackIcon, ViewIcon } from '@chakra-ui/icons';
 import { CREATECHAT, FETCHAGAIN } from '../../context/types/users';
 import { useMainContext } from '../../context/_context/UserContext';
@@ -19,7 +25,7 @@ import {
 	NEWMESSAGE,
 	SETNOTIFICATIONS,
 } from '../../context/types/users';
-
+import { useMediaQuery } from '@chakra-ui/react';
 import axios from 'axios';
 import './style.css';
 import ScrollableChat from './ScrollableChat';
@@ -29,7 +35,7 @@ import {
 	getMessagesSlice,
 	sendMessageSlice,
 } from '../../context/features/users';
-const Endpoint = 'https://gigme-backend.onrender.com';
+const Endpoint = 'http://localhost:3500';
 let socket, selectedChatCompare;
 const SingleChat = () => {
 	const [socketConnected, setSocket] = useState(false);
@@ -40,6 +46,7 @@ const SingleChat = () => {
 			loading,
 			new_message,
 			notifications,
+			fetchMessages,
 		},
 		userDispatch,
 	} = useMainContext();
@@ -87,19 +94,13 @@ const SingleChat = () => {
 		socket.on('connected', () => setSocket(true));
 		socket.on('typing', () => setIsTyping(true));
 		socket.on('stop typing', () => setIsTyping(false));
-		return () => {
-			if (socket.readyState === 1) {
-				// <-- This is important
-				socket.close();
-			}
-		};
 	}, []);
 
 	// create a copy of the current chat
 	useEffect(() => {
 		getAllMessages();
 		selectedChatCompare = selectedchat;
-	}, [selectedchat]);
+	}, [selectedchat, fetchMessages]);
 
 	useEffect(() => {
 		socket.on('message recieved', (newmessage) => {
@@ -117,7 +118,7 @@ const SingleChat = () => {
 			} else {
 				userDispatch({
 					type: MESSAGES,
-					payload: [newmessage, ...notifications],
+					payload: [...messages, newmessage],
 				});
 			}
 		});
@@ -147,15 +148,11 @@ const SingleChat = () => {
 			}
 		}, timer);
 	};
+	const [isSmallScreen] = useMediaQuery('(max-width: 820px)');
 	return (
 		<>
 			{selectedchat ? (
-				<Box
-					sx={{
-						width: '100%',
-						h: '100%',
-					}}
-				>
+				<>
 					<Text
 						w="100%"
 						fontSize={{ base: '28px', md: '18px' }}
@@ -169,7 +166,7 @@ const SingleChat = () => {
 						}}
 					>
 						<IconButton
-							d={{ base: 'flex', md: 'none' }}
+							sx={{ display: isSmallScreen ? 'flex' : 'none' }}
 							icon={<ArrowBackIcon />}
 							onClick={() =>
 								userDispatch({ type: CREATECHAT, payload: '' })
@@ -195,18 +192,16 @@ const SingleChat = () => {
 					</Text>
 
 					<Box
-						w="100%"
-						h="85%"
-						d="flex"
-						justifyContent="column"
 						style={{
 							display: 'flex',
-
+							height: '100%',
 							flexDirection: 'column',
 							justifyContent: 'flex-end',
 
 							width: '100%',
 						}}
+						p={3}
+						overflowY={'hidden'}
 						className="chatpage"
 					>
 						{loading ? (
@@ -234,12 +229,12 @@ const SingleChat = () => {
 						sendMessage={sendMessage}
 						typingHandler={typingHandler}
 					/>
-				</Box>
+				</>
 			) : (
 				<>
 					<Box
 						style={{
-							display: 'flex',
+							display: !isSmallScreen ? 'flex' : 'none',
 							justifyContent: 'center',
 							alignItems: 'center',
 						}}

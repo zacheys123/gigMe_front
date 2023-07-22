@@ -27,8 +27,8 @@ const TypeMessages = ({ isTyping, sendMessage, typingHandler }) => {
 		},
 	};
 	return (
-		<Box mt={5} w="100%">
-			<FormControl isRequired onKeyDown={sendMessage}>
+		<Box mt={2} w="100%">
+			<FormControl isRequired onKeyDown={sendMessage} mb={5}>
 				{isTyping ? (
 					<div className="typing">
 						<span></span>
@@ -43,7 +43,7 @@ const TypeMessages = ({ isTyping, sendMessage, typingHandler }) => {
 					style={{ outline: 'none !important' }}
 					borderRadius={'99px'}
 					variant="filled"
-					bg="#F1E9B0"
+					border=".1px solid lightgrey"
 					value={new_message}
 					onChange={typingHandler}
 				/>

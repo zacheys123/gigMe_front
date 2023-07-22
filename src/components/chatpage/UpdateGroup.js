@@ -155,15 +155,14 @@ const UpdateGroup = ({ fetchMessages, children }) => {
 
 	return (
 		<Box>
-			{children ? (
-				<span onClick={onOpen}>{children}</span>
-			) : (
-				<IconButton
-					d={{ base: 'flex' }}
-					icon={<ViewIcon />}
-					onClick={onOpen}
-				/>
-			)}
+			<span onClick={onOpen}>{children}</span>
+
+			<IconButton
+				d={{ base: 'flex' }}
+				icon={<ViewIcon />}
+				onClick={onOpen}
+			/>
+
 			<Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered>
 				<ModalOverlay />
 				<ModalContent h="410px">
@@ -240,7 +239,7 @@ const UpdateGroup = ({ fetchMessages, children }) => {
 						</Stack>
 						<FormControl d="flex">
 							<Input
-								placeholder="Chat Name"
+								placeholder="Group Name"
 								mb={3}
 								w="80%"
 								value={groupName}
@@ -256,7 +255,10 @@ const UpdateGroup = ({ fetchMessages, children }) => {
 								Update
 							</Button>{' '}
 						</FormControl>
-						<FormControl d="flex" style={{ display: 'flex' }}>
+						<FormControl
+							d="flex"
+							style={{ display: 'flex', marginBottom: '1rem' }}
+						>
 							<Input
 								placeholder="Search Users e.g zach,mose,justo"
 								w="80%"

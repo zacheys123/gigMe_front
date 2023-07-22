@@ -7,14 +7,15 @@ import SideDrawer from '../components/chatpage/SideDrawer';
 import MyChats from '../components/chatpage/MyChats';
 import ChatBox from '../components/chatpage/ChatBox';
 import Logout from '../components/chatpage/Logout';
+import { useMediaQuery } from '@chakra-ui/react';
 const Chats = () => {
 	const {
 		authState: { user },
 	} = useAuthContext();
 	const [loading, setLoading] = useState(false);
-
+	const [isSmallScreen] = useMediaQuery('(max-width: 820px)');
 	return (
-		<Box w="100%" bg={'lightgrey'}>
+		<Box w="100%" bg={'lightgrey'} overflowY={'hidden'}>
 			{user && (
 				<SideDrawer loading={loading} setLoading={setLoading} />
 			)}

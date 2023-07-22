@@ -16,7 +16,7 @@ import ChatLoading from './ChatLoading';
 import { CREATECHAT } from '../../context/types/users';
 import { getSender } from './config/chatLogics';
 import SearchModal from './SearchModal';
-
+import { useMediaQuery } from '@chakra-ui/react';
 const MyChats = () => {
 	const {
 		userState: { chats, selectedchat, fetchagain },
@@ -36,13 +36,18 @@ const MyChats = () => {
 		fetchChats();
 	}, [fetchagain]);
 
+	const [isSmallScreen] = useMediaQuery('(max-width: 820px)');
+
 	return (
 		<Box
+			style={{
+				display: selectedchat && isSmallScreen ? 'none' : 'flex',
+				width: !isSmallScreen ? '31%' : '100%',
+			}}
 			flexDir="column"
 			alignItems="center"
 			p={3}
 			bg={'white'}
-			w={{ base: '100%', md: '31%' }}
 			borderRadius="lg"
 			borderWidth="1px"
 		>
@@ -54,28 +59,46 @@ const MyChats = () => {
 						fontSize={{ base: '28px', md: '30px' }}
 						fontFamily="Work sans"
 						d="flex"
-						style={{ display: 'flex' }}
+						style={{
+							display:
+								selectedchat && isSmallScreen ? 'none' : 'flex',
+							flex: selectedchat && isSmallScreen ? '9' : '3',
+						}}
 						w="100%"
 						justifyContent="space-between"
 						alignItems="center"
 					>
 						<Text
-							fontSize={{ base: '17px', md: '18px', lg: '17px' }}
+							fontSize={isSmallScreen ? '10px' : '13px'}
 							fontWeight="bold"
+							fontFamily="Sofia Sans"
 						>
 							My Chats
 						</Text>
 						<Button
 							d="flex"
-							fontSize={{ base: '17px', md: '10px', lg: '17px' }}
-							rightIcon={<AddIcon />}
+							fontSize={isSmallScreen ? '10px' : '15px'}
+							fontFamily="Sofia Sans"
+							rightIcon={<AddIcon sx={{ fontSize: '.6rem' }} />}
 							onClick={() => setNewGroup((prev) => !prev)}
 						>
 							New Group Chat
 						</Button>
 					</Box>
+					<Text
+						textAlign="left"
+						fontWeight="bold"
+						fontSize="12px"
+						fontFamily="cursive sans"
+						mt={3}
+					>
+						List of Chats:
+					</Text>
 					<Box
-						style={{ display: 'flex' }}
+						style={{
+							display:
+								selectedchat && isSmallScreen ? 'none' : 'flex',
+						}}
 						flexDir="column"
 						p={3}
 						bg="#F8F8F8"
@@ -107,7 +130,7 @@ const MyChats = () => {
 													}
 													px={3}
 													py={2}
-													key={chat._id}
+													key={chat?._id}
 													_hover={{
 														background: '#A3C9F9',
 														color: 'white',
@@ -137,12 +160,7 @@ const MyChats = () => {
 																	!chat ? '' : chat?.users[1]?.name
 																}
 															/>
-															<Text>
-																{chat?.users[0]._id ===
-																user?.result?._id
-																	? chat?.users[1]?.name
-																	: chat?.users[0]?.name}
-															</Text>
+															<Text>{getSender(chat, user)}</Text>
 														</>
 													) : (
 														<>

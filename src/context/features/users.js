@@ -12,6 +12,7 @@ import {
 	NEWMESSAGE,
 	LOADING,
 	SETNOTIFICATIONS,
+	FETCHMESSAGESAGAIN,
 } from '../types/users';
 const baseUrl = 'https://gigme-backend.onrender.com';
 export const searchSlice = async (
@@ -49,6 +50,7 @@ export const accessChatSlice = async (
 	dispatch,
 	id,
 	chats,
+	close,
 ) => {
 	setLoading(true);
 	let config = {
@@ -70,7 +72,8 @@ export const accessChatSlice = async (
 
 		dispatch({ type: CREATECHAT, payload: data });
 		setLoading(false);
-		window.location.reload();
+		dispatch({ type: FETCHAGAIN });
+		close();
 	} catch (error) {
 		console.log(error);
 	}
@@ -338,16 +341,15 @@ export const sendMessageSlice = async (
 				{ content: new_message, chatId: selectedchat?._id },
 				config,
 			);
-
-			console.log(data);
-			socket.emit('new message', data);
 			userDispatch({
 				type: MESSAGES,
 				payload: [...messages, data],
 			});
+
+			socket.emit('new message', data);
 		} catch (error) {
 			toast({
-				title: error?.response?.data?.message,
+				title: error?.response?.data,
 				description: 'Failed to Update Messages',
 				duration: 3000,
 				isClosable: true,
@@ -380,10 +382,12 @@ export const getMessageSlice = async (
 			config,
 		);
 
-		console.log(messages);
 		userDispatch({ type: MESSAGES, payload: data });
 		userDispatch({ type: LOADING });
+		userDispatch({ type: FETCHMESSAGESAGAIN });
 		socket.emit('join chat', selectedchat?._id);
+		socket.emit('msg');
+		userDispatch({ type: FETCHMESSAGESAGAIN });
 	} catch (error) {
 		console.log(error.message);
 	}

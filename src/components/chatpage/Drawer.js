@@ -55,13 +55,14 @@ const DrawerRight = ({ user, users, children }) => {
 		console.log(search_chats);
 	}, [search, users]);
 
-	const accessChat = (id) => {
+	const accessChat = (selectedchatuser_id) => {
 		accessChatSlice(
 			user,
 			setSelectedChatLoading,
 			userDispatch,
-			id,
+			selectedchatuser_id,
 			chats,
+			onClose,
 		);
 	};
 	return (

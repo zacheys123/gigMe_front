@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
 	Input,
 	FormControl,
-	Stack,
+	VStack,
 	Text,
 	useToast,
 	Box,
@@ -10,6 +10,7 @@ import {
 	Button,
 	CloseButton,
 	Avatar,
+	HStack,
 } from '@chakra-ui/react';
 import axios from 'axios';
 
@@ -132,7 +133,7 @@ const SearchModal = ({ user, chats, setNewGroup }) => {
 		return selectedUsers.splice(u, 1);
 	};
 	return (
-		<Box w="100%" h="100%" mt={10}>
+		<Box w="100%" h="100%">
 			{' '}
 			<Box>
 				<Box
@@ -155,6 +156,9 @@ const SearchModal = ({ user, chats, setNewGroup }) => {
 						variant="solid"
 						bg="grey"
 						color="white"
+						fontSize="1rem"
+						p={3}
+						fontFamily="Sofia Sans"
 						onClick={() => setNewGroup((prev) => !prev)}
 					>
 						back
@@ -170,16 +174,18 @@ const SearchModal = ({ user, chats, setNewGroup }) => {
 				</FormControl>
 			</Box>
 			<Box>
-				<Stack
+				<HStack
+					h="100%"
 					direction="row"
 					w="100%"
 					color="white"
-					flexWrap={{ base: 'wrap', lg: 'wrap', md: 'nowrap' }}
+					overflowX="scroll"
 				>
 					{selectedUsers?.map((u, idx) => {
 						return (
 							<Box
-								key={u._id}
+								h="100%"
+								key={u?._id}
 								d="flex"
 								p={2}
 								bg={'purple'}
@@ -204,7 +210,7 @@ const SearchModal = ({ user, chats, setNewGroup }) => {
 							</Box>
 						);
 					})}
-				</Stack>
+				</HStack>
 			</Box>
 			<Divider orientation="horizontal" m="2" />
 			<Box>
@@ -250,26 +256,17 @@ const SearchModal = ({ user, chats, setNewGroup }) => {
 			<Box
 				style={{
 					position: 'relative',
-					h: '100%',
-					overflowY: 'hidden',
+					height: '100%',
 				}}
 			>
 				<Box>
-					<Text
-						d="flex"
-						color="green"
-						fontSize={{ base: '14px', md: '13px', lg: '17px' }}
-						m="2"
-						fontWeight="bold"
-					>
-						All available users:
-					</Text>
 					{loading ? (
 						<div>loading...</div>
 					) : (
-						searchResult?.map((user) => {
+						searchResult?.slice(0, 7)?.map((user) => {
 							return (
 								<UserList
+									margint={4}
 									key={user?._id}
 									user={user}
 									handleFunction={() => handleGroup(user)}

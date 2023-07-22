@@ -60,7 +60,6 @@ const ScrollableChat = ({ messages, selectedchat }) => {
 							style={{
 								display: 'flex',
 								margin: '1',
-								maxWidth: '100%',
 							}}
 							key={m._id}
 						>
@@ -74,7 +73,7 @@ const ScrollableChat = ({ messages, selectedchat }) => {
 										}`,
 										borderRadius: '99px',
 										padding: '5px 15px',
-										maxWidth: '95%',
+										maxWidth: '75%',
 										marginLeft: isSameSenderMargin(
 											messages,
 											m,
@@ -88,8 +87,8 @@ const ScrollableChat = ({ messages, selectedchat }) => {
 											i,
 											user?.result._id,
 										)
-											? '5px'
-											: '10px',
+											? 3
+											: 10,
 										marginBottom: isSameUser(
 											messages,
 											m,
