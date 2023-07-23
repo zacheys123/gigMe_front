@@ -34,11 +34,6 @@ const Home = () => {
 	const nav = useNavigate();
 
 	const id = JSON.parse(localStorage.getItem('profile'));
-	useEffect(() => {
-		if (id) {
-			nav('/chats');
-		}
-	}, [id, nav]);
 
 	return (
 		<Container maxW="xl" centerContent className="home">
