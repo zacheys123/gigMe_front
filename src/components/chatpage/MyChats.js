@@ -13,13 +13,17 @@ import { fetchSlice } from '../../context/features/users';
 import { AddIcon } from '@chakra-ui/icons';
 import NewChat from './userAvatar/NewChat';
 import ChatLoading from './ChatLoading';
-import { CREATECHAT } from '../../context/types/users';
+import {
+	CREATECHAT,
+	SETNOTIFICATIONS,
+} from '../../context/types/users';
 import { getSender } from './config/chatLogics';
 import SearchModal from './SearchModal';
 import { useMediaQuery } from '@chakra-ui/react';
+import Badge from '@mui/material/Badge';
 const MyChats = () => {
 	const {
-		userState: { chats, selectedchat, fetchagain },
+		userState: { chats, selectedchat, fetchagain, notifications },
 		userDispatch,
 	} = useMainContext();
 	const {
@@ -85,15 +89,120 @@ const MyChats = () => {
 							New Group Chat
 						</Button>
 					</Box>
-					<Text
-						textAlign="left"
-						fontWeight="bold"
-						fontSize="12px"
-						fontFamily="cursive sans"
-						mt={3}
-					>
-						List of Chats:
-					</Text>
+
+					<Box>
+						{' '}
+						<Box>
+							{' '}
+							<Text
+								textAlign="left"
+								fontWeight="bold"
+								fontSize="12px"
+								fontFamily="cursive sans"
+								mt={3}
+								mb={3}
+							>
+								New Notifications:
+							</Text>
+						</Box>
+						<Stack overflowY="scroll">
+							{notifications
+								? notifications?.map((notif) => {
+										return (
+											<Box
+												d="flex"
+												flexDirection="column"
+												onClick={() =>
+													userDispatch({
+														type: SETNOTIFICATIONS,
+														payload: notif,
+													})
+												}
+												cursor="pointer"
+												bg={
+													selectedchat === notif?.chat
+														? '#38B2AC'
+														: '#E8E8E8'
+												}
+												color={
+													selectedchat === notif?.chat
+														? 'white'
+														: 'black'
+												}
+												px={1}
+												py={1}
+												key={notif?._id}
+												_hover={{
+													background: '#A3C9F9',
+													color: 'white',
+												}}
+												w="100% "
+												style={{
+													display: 'flex',
+													alignItems: 'center',
+													color: 'black',
+
+													borderRadius: '10px',
+													background: '#8E8E8',
+													marginBottom: '.7rem',
+													padding: '.3rem',
+												}}
+											>
+												<Box>
+													{!notif?.chat?.isGroupChat ? (
+														<>
+															<Avatar
+																mr={2}
+																size="sm"
+																ml="2"
+																cursor="pointer"
+																name={
+																	!notif ? '' : notif?.sender[0]?.name
+																}
+															/>
+															<Text>
+																{notif?.chat?.users[0]?._id !==
+																user.result?._id
+																	? notif?.sender[0]?.name
+																	: ''}
+															</Text>
+														</>
+													) : (
+														<>
+															{' '}
+															<Avatar
+																mr={2}
+																size="sm"
+																ml="2"
+																cursor="pointer"
+																name={notif?.chat?.chatName}
+															/>
+															{notif?.chat?.chatName}
+														</>
+													)}{' '}
+												</Box>
+												<Text
+													fontSize="12px"
+													fontWeight="bold"
+													fontFamily="cursive"
+												>
+													{notif?.content}
+												</Text>
+												<Badge
+													sx={{
+														left: '45%',
+														top: '-43%',
+														fontSize: '10px ',
+													}}
+													badgeContent={notifications.length}
+													color="error"
+												/>
+											</Box>
+										);
+								  })
+								: ''}
+						</Stack>
+					</Box>
 					<Box
 						style={{
 							display:
@@ -107,6 +216,15 @@ const MyChats = () => {
 						borderRadius="lg"
 						overflowY="hidden"
 					>
+						<Text
+							textAlign="left"
+							fontWeight="bold"
+							fontSize="12px"
+							fontFamily="cursive sans"
+							mt={3}
+						>
+							Chat history:
+						</Text>
 						{!loadingchats ? (
 							<Stack overflowY="scroll">
 								{chats
@@ -157,7 +275,7 @@ const MyChats = () => {
 																ml="2"
 																cursor="pointer"
 																name={
-																	!chat ? '' : chat?.users[1]?.name
+																	!chat ? '' : chat?.users[0]?.name
 																}
 															/>
 															<Text>{getSender(chat, user)}</Text>

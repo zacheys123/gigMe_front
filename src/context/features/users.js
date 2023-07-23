@@ -14,6 +14,7 @@ import {
 	SETNOTIFICATIONS,
 	FETCHMESSAGESAGAIN,
 } from '../types/users';
+// const baseUrl = 'http://localhost:3500';
 const baseUrl = 'https://gigme-backend.onrender.com';
 export const searchSlice = async (
 	user,
@@ -143,7 +144,7 @@ export const addUserSlice = async (
 	selectedGroupchat,
 	onClose,
 	loggeduser,
-	selectedUser,
+	clicked_User,
 	setaddLoad,
 	setSelectedUsers,
 	selectedUsers,
@@ -156,7 +157,7 @@ export const addUserSlice = async (
 ) => {
 	let token = loggeduser?.token;
 	if (
-		selectedGroupchat?.users?.find((u) => u._id === selectedUser._id)
+		selectedGroupchat?.users?.find((u) => u._id === clicked_User._id)
 	) {
 		toast({
 			title: 'User Already In the Group',
@@ -191,7 +192,7 @@ export const addUserSlice = async (
 			`${baseUrl}/api/groupadd`,
 			{
 				chatId: selectedGroupchat?._id,
-				userId: selectedUser?._id,
+				userId: clicked_User?._id,
 			},
 			config,
 		);

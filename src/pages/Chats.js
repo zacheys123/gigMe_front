@@ -15,7 +15,7 @@ const Chats = () => {
 	const [loading, setLoading] = useState(false);
 	const [isSmallScreen] = useMediaQuery('(max-width: 820px)');
 	return (
-		<Box w="100%" bg={'lightgrey'} overflowY={'hidden'}>
+		<Box w="100%" bg={'lightgrey'} overflow={'hidden'}>
 			{user && (
 				<SideDrawer loading={loading} setLoading={setLoading} />
 			)}

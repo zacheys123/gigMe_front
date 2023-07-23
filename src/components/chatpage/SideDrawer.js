@@ -47,7 +47,7 @@ const SideDrawer = ({ loading, setLoading }) => {
 		console.log(users);
 	}, [users]);
 	const [isSmallScreen] = useMediaQuery('(max-width: 820px)');
-
+	const local_notifications = [];
 	return (
 		<>
 			<Box

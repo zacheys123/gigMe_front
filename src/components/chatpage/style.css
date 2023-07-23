@@ -4,3 +4,23 @@
 	overflow-y: scroll;
 	scrollbar-width: none;
 }
+
+.active {
+	background: rgb(205, 19, 208) !important;
+	opacity: 0.7;
+	color: white !important;
+	cursor: pointer;
+}
+.in_active {
+	opacity: 1;
+	cursor: pointer;
+}
+.active_page {
+	height: '100%';
+	margin-top: 6;
+	display: 'flex';
+	flex-direction: 'column';
+}
+.in_active_page {
+	display: none;
+}

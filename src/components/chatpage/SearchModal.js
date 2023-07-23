@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
 	Input,
 	FormControl,
@@ -18,7 +18,7 @@ import UserList from './userAvatar/UserList';
 import { useMainContext } from '../../context/_context/UserContext';
 import { UPDATECHATS, APPEND } from '../../context/types/users';
 import { useNavigate } from 'react-router-dom';
-const SearchModal = ({ user, chats, setNewGroup }) => {
+const SearchModal = ({ user, chats, setNewGroup, myref }) => {
 	const baseUrl = 'https://gigme-backend.onrender.com';
 	const [groupName, setGroupName] = useState('');
 	const [selectedUsers, setSelectedUsers] = useState([]);
@@ -132,8 +132,9 @@ const SearchModal = ({ user, chats, setNewGroup }) => {
 	const handleDelete = (u) => {
 		return selectedUsers.splice(u, 1);
 	};
+
 	return (
-		<Box w="100%" h="100%">
+		<Box w="100%" h="100%" ref={myref}>
 			{' '}
 			<Box>
 				<Box

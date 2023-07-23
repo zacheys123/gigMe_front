@@ -56,6 +56,7 @@ const SingleChat = () => {
 
 	const [typing, setTyping] = useState(false);
 	const [isTyping, setIsTyping] = useState(false);
+
 	const toast = useToast();
 	const sendMessage = async (ev) => {
 		sendMessageSlice(
@@ -101,7 +102,7 @@ const SingleChat = () => {
 		getAllMessages();
 		selectedChatCompare = selectedchat;
 	}, [selectedchat, fetchMessages]);
-
+	let local_notif = [];
 	useEffect(() => {
 		socket.on('message recieved', (newmessage) => {
 			if (
