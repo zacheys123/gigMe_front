@@ -35,7 +35,13 @@ import {
 	getMessagesSlice,
 	sendMessageSlice,
 } from '../../context/features/users';
-const Endpoint = 'http://localhost:3500';
+import { Icon, createIcon } from '@chakra-ui/react';
+import Phone from '@mui/icons-material/PhoneEnabled';
+import Group from '@mui/icons-material/Groups3';
+import GroupAdd from '@mui/icons-material/GroupAdd';
+import VideocamIcon from '@mui/icons-material/Videocam';
+// const Endpoint = 'http://localhost:3500';
+const Endpoint = 'https://gigme-backend.onrender.com';
 let socket, selectedChatCompare;
 const SingleChat = () => {
 	const [socketConnected, setSocket] = useState(false);
@@ -176,9 +182,66 @@ const SingleChat = () => {
 
 						{!selectedchat.isGroupChat ? (
 							<>
-								{selectedchat?.users[0]._id === user?.result?._id
-									? selectedchat?.users[1].name
-									: selectedchat?.users[0].name}
+								<Box
+									d="flex"
+									flexDirection="column"
+									p={2}
+									alignItems="center"
+								>
+									<Text fontSize="15px" fontFamily="cursive sans">
+										{selectedchat?.users[0]._id === user?.result?._id
+											? selectedchat?.users[1].name
+											: selectedchat?.users[0].name}
+									</Text>
+									<Text fontSize=".7rem" fontFamily="Work Sans">
+										<span>
+											<Icon viewBox="0 0 200 200" color="green.500">
+												<path
+													fill="currentColor"
+													d="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"
+												/>
+											</Icon>
+										</span>
+										<span> Online </span>
+									</Text>
+								</Box>
+								<Box
+									d="flex"
+									justifyContent="space-between"
+									alignItems="center"
+								>
+									{' '}
+									<IconButton
+										sx={{
+											display: isSmallScreen
+												? 'inline-block'
+												: 'none',
+											padding: '.5rem',
+											borderRadius: '30px !important',
+											fontSize: '.6rem ',
+											marginLeft: '.5rem !important',
+										}}
+									>
+										<Phone
+											sx={{
+												fontSize: '1.1rem',
+											}}
+										/>
+									</IconButton>{' '}
+									<IconButton
+										sx={{
+											borderRadius: '30px !important',
+											fontSize: '.6rem ',
+											marginLeft: '.5rem !important',
+										}}
+									>
+										<VideocamIcon
+											sx={{
+												fontSize: '1.1rem',
+											}}
+										/>
+									</IconButton>{' '}
+								</Box>
 								<ProfileModal
 									user={getSenderFull(user, selectedchat?.users)}
 								/>

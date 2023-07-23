@@ -222,6 +222,7 @@ const MyChats = () => {
 							fontSize="12px"
 							fontFamily="cursive sans"
 							mt={3}
+							mb={3}
 						>
 							Chat history:
 						</Text>

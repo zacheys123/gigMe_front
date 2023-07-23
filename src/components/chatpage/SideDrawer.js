@@ -84,7 +84,7 @@ const SideDrawer = ({ loading, setLoading }) => {
 						</Badge>
 					</MenuButton>
 					<MenuList pl={2}>
-						{!notifications.length && 'no new messages'}
+						{!notifications?.length && 'no new messages'}
 						{notifications.map((notification) => {
 							return (
 								<MenuItem
